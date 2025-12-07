@@ -342,7 +342,57 @@ export default function AdminDashboard() {
                         </div>
                     </div>
                 )}
+
+                {/* Bookings Tab */}
+                {activeTab === "bookings" && (
+                    <div className="space-y-4">
+                        <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                            <Calendar size={20} /> Booking Requests
+                        </h2>
+                        <div className="grid gap-4">
+                            {bookings.map((booking) => (
+                                <div key={booking.id} className="bg-neutral-900 p-6 rounded-xl border border-neutral-800">
+                                    <div className="flex flex-col md:flex-row justify-between md:items-start gap-4 mb-4">
+                                        <div>
+                                            <h3 className="text-xl font-bold text-white">{booking.name}</h3>
+                                            <p className="text-gray-400 text-sm">{new Date(booking.created_at).toLocaleString()}</p>
+                                        </div>
+                                        <div className="px-3 py-1 bg-neutral-800 rounded-full text-xs uppercase tracking-wider font-medium text-gray-300 w-fit">
+                                            {booking.type}
+                                        </div>
+                                    </div>
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                        <div className="flex items-center gap-2 text-gray-300">
+                                            <Calendar size={16} className="text-neutral-500" />
+                                            <span>Date: {new Date(booking.date).toDateString()}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 text-gray-300">
+                                            <Mail size={16} className="text-neutral-500" />
+                                            <a href={`mailto:${booking.email}`} className="hover:text-white underline">{booking.email}</a>
+                                        </div>
+                                        <div className="flex items-center gap-2 text-gray-300">
+                                            <Phone size={16} className="text-neutral-500" />
+                                            <a href={`tel:${booking.phone}`} className="hover:text-white hover:underline">{booking.phone || "N/A"}</a>
+                                        </div>
+                                    </div>
+
+                                    <div className="bg-neutral-800/50 p-4 rounded-lg">
+                                        <div className="flex items-start gap-2">
+                                            <MessageSquare size={16} className="text-neutral-500 mt-1" />
+                                            <p className="text-gray-300 whitespace-pre-wrap">{booking.message}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                            {bookings.length === 0 && (
+                                <div className="text-center text-gray-500 py-12">
+                                    No bookings yet.
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
-        </div>
-    );
+            );
 }

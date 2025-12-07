@@ -46,6 +46,12 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
+                    <Link
+                        href="/booking"
+                        className="px-5 py-2.5 bg-white text-black text-sm font-bold rounded-full hover:bg-neutral-200 transition-colors"
+                    >
+                        Book Now
+                    </Link>
                 </div>
 
                 {/* Mobile Menu Button */}
@@ -77,6 +83,13 @@ export default function Navbar() {
                                     {link.name}
                                 </Link>
                             ))}
+                            <Link
+                                href="/booking"
+                                onClick={() => setIsOpen(false)}
+                                className="text-2xl font-bold mt-4" // Made distinct for mobile
+                            >
+                                Book a Session
+                            </Link>
                         </div>
                     </motion.div>
                 )}

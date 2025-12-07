@@ -26,6 +26,10 @@ export const metadata: Metadata = {
     description: "Capturing souls and stories. Professional photography services in Rourkela, Odisha by Dibya Ranjan Dwibedy.",
     siteName: "DRD Clicks",
   },
+  icons: {
+    icon: '/icon.png',
+    apple: '/icon.png',
+  },
 };
 
 export default function RootLayout({

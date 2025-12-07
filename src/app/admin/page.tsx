@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
-import { Plus, Trash2, LogOut, Image as ImageIcon, Instagram } from "lucide-react";
+import { Plus, Trash2, LogOut, Image as ImageIcon, Instagram, Calendar, Mail, Phone, MessageSquare } from "lucide-react";
 
 type Work = {
     id: number;
@@ -20,11 +20,24 @@ type Post = {
     created_at: string;
 };
 
+type Booking = {
+    id: number;
+    created_at: string;
+    name: string;
+    email: string;
+    phone: string;
+    date: string;
+    type: string;
+    message: string;
+    status: string;
+};
+
 export default function AdminDashboard() {
     const router = useRouter();
-    const [activeTab, setActiveTab] = useState<"portfolio" | "social">("portfolio");
+    const [activeTab, setActiveTab] = useState<"portfolio" | "social" | "bookings">("portfolio");
     const [works, setWorks] = useState<Work[]>([]);
     const [posts, setPosts] = useState<Post[]>([]);
+    const [bookings, setBookings] = useState<Booking[]>([]);
     const [loading, setLoading] = useState(true);
     const [uploading, setUploading] = useState(false);
 
@@ -48,9 +61,11 @@ export default function AdminDashboard() {
         setLoading(true);
         const { data: worksData } = await supabase.from("works").select("*").order("id", { ascending: false });
         const { data: postsData } = await supabase.from("posts").select("*").order("created_at", { ascending: false });
+        const { data: bookingsData } = await supabase.from("bookings").select("*").order("created_at", { ascending: false });
 
         if (worksData) setWorks(worksData);
         if (postsData) setPosts(postsData as Post[]);
+        if (bookingsData) setBookings(bookingsData);
         setLoading(false);
     };
 
@@ -141,6 +156,13 @@ export default function AdminDashboard() {
                             }`}
                     >
                         Social / Journal
+                    </button>
+                    <button
+                        onClick={() => setActiveTab("bookings")}
+                        className={`px-4 py-2 rounded-lg transition-colors ${activeTab === "bookings" ? "bg-white text-black font-bold" : "text-gray-400 hover:text-white"
+                            }`}
+                    >
+                        Bookings
                     </button>
                 </div>
 

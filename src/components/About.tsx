@@ -40,7 +40,7 @@ export default function About() {
                         </h2>
                         <div className="space-y-6 text-gray-400 text-lg leading-relaxed">
                             <p>
-                                I am a passionate photographer dedicated to capturing the raw
+                                I am <strong>Dibya Ranjan Dwibedy</strong>, a passionate photographer based in <strong>Rourkela, Odisha</strong>. Dedicated to capturing the raw
                                 beauty and authentic emotions of every moment. With a keen eye
                                 for detail and a love for storytelling, I strive to create
                                 images that resonate on a deeper level.

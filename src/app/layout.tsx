@@ -13,8 +13,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DRD Clicks | Dibya Ranjan Dwibedi",
-  description: "Professional Photography Portfolio by Dibya Ranjan Dwibedi",
+  title: "Dibya Ranjan Dwibedy | Professional Photographer in Rourkela, Odisha",
+  description: "Portfolio of Dibya Ranjan Dwibedy (DRD Clicks), a professional photographer based in Rourkela, Odisha. Specializing in nature, portrait, and event photography.",
+  keywords: ["Photographer", "Rourkela", "Odisha", "Dibya Ranjan Dwibedy", "DRD Clicks", "Portfolio", "Photography", "Wedding Photographer", "Event Photographer"],
+  authors: [{ name: "Dibya Ranjan Dwibedy" }],
+  creator: "Dibya Ranjan Dwibedy",
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://drdclicks.com",
+    title: "Dibya Ranjan Dwibedy | Photographer Rourkela",
+    description: "Capturing souls and stories. Professional photography services in Rourkela, Odisha by Dibya Ranjan Dwibedy.",
+    siteName: "DRD Clicks",
+  },
 };
 
 export default function RootLayout({

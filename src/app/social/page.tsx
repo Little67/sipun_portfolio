@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { InstagramEmbed } from 'react-social-media-embed';
 import { supabase } from "@/lib/supabase";
 import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
@@ -55,7 +56,7 @@ export default function SocialPage() {
                 {loading ? (
                     <div className="text-center text-gray-500">Loading feed...</div>
                 ) : (
-                    <div className="max-w-2xl mx-auto space-y-12">
+                    <div className="max-w-xl mx-auto space-y-12">
                         {posts.map((post, index) => (
                             <motion.div
                                 key={post.id}
@@ -68,7 +69,6 @@ export default function SocialPage() {
                                 {/* Header */}
                                 <div className="p-4 flex items-center gap-3 border-b border-neutral-800">
                                     <div className="w-10 h-10 bg-gray-700 rounded-full overflow-hidden">
-                                        {/* Placeholder Avatar */}
                                         <div className="w-full h-full bg-gradient-to-br from-purple-500 to-pink-500" />
                                     </div>
                                     <div>
@@ -91,17 +91,27 @@ export default function SocialPage() {
                                             className="w-full h-auto"
                                         />
                                     ) : (
-                                        <div className="w-full aspect-square flex items-center justify-center bg-neutral-800 text-gray-500">
-                                            {/* Note: Real Instagram Embeds require a library like react-instagram-embed or an iframe */}
-                                            <a
-                                                href={post.content_url}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="flex flex-col items-center gap-2 hover:text-white transition-colors"
-                                            >
-                                                <Instagram size={48} />
-                                                <span className="text-sm">View on Instagram</span>
-                                            </a>
+                                        <div className="w-full flex items-center justify-center bg-white">
+                                            {post.content_url.includes("instagram.com") ? (
+                                                <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                                                    <InstagramEmbed
+                                                        url={post.content_url}
+                                                        width="100%"
+                                                    />
+                                                </div>
+                                            ) : (
+                                                <div className="aspect-square flex flex-col items-center justify-center gap-2 text-black p-8">
+                                                    <Instagram size={48} />
+                                                    <a
+                                                        href={post.content_url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="text-sm font-bold hover:underline"
+                                                    >
+                                                        View on Instagram
+                                                    </a>
+                                                </div>
+                                            )}
                                         </div>
                                     )}
                                 </div>

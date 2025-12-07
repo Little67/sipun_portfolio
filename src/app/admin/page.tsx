@@ -26,10 +26,11 @@ export default function AdminDashboard() {
     const [works, setWorks] = useState<Work[]>([]);
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
+    const [uploading, setUploading] = useState(false);
 
     // Form states
     const [newWork, setNewWork] = useState({ title: "", category: "", image_url: "" });
-    const [newPost, setNewPost] = useState({ type: "image", content_url: "", caption: "" });
+    const [newPost, setNewPost] = useState({ type: "instagram", content_url: "", caption: "" });
 
     useEffect(() => {
         checkUser();
@@ -58,6 +59,27 @@ export default function AdminDashboard() {
         router.push("/login");
     };
 
+    const uploadImage = async (file: File) => {
+        setUploading(true);
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${Math.random()}.${fileExt}`;
+        const filePath = `${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+            .from('portfolio')
+            .upload(filePath, file);
+
+        if (uploadError) {
+            alert("Error uploading image: " + uploadError.message);
+            setUploading(false);
+            return null;
+        }
+
+        const { data } = supabase.storage.from('portfolio').getPublicUrl(filePath);
+        setUploading(false);
+        return data.publicUrl;
+    };
+
     const addWork = async (e: React.FormEvent) => {
         e.preventDefault();
         const { error } = await supabase.from("works").insert([newWork]);
@@ -79,7 +101,7 @@ export default function AdminDashboard() {
         e.preventDefault();
         const { error } = await supabase.from("posts").insert([newPost]);
         if (!error) {
-            setNewPost({ type: "image", content_url: "", caption: "" });
+            setNewPost({ type: "instagram", content_url: "", caption: "" });
             fetchData();
         } else {
             alert("Error adding post: " + error.message);
@@ -145,14 +167,45 @@ export default function AdminDashboard() {
                                     className="w-full bg-neutral-800 p-3 rounded-lg border border-neutral-700 focus:outline-none focus:border-white"
                                     required
                                 />
-                                <input
-                                    placeholder="Image URL"
-                                    value={newWork.image_url}
-                                    onChange={(e) => setNewWork({ ...newWork, image_url: e.target.value })}
-                                    className="w-full bg-neutral-800 p-3 rounded-lg border border-neutral-700 focus:outline-none focus:border-white"
-                                    required
-                                />
-                                <button type="submit" className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200">
+
+                                <div className="space-y-4">
+                                    <input
+                                        placeholder="Image URL"
+                                        value={newWork.image_url}
+                                        onChange={(e) => setNewWork({ ...newWork, image_url: e.target.value })}
+                                        className="w-full bg-neutral-800 p-3 rounded-lg border border-neutral-700 focus:outline-none focus:border-white"
+                                    />
+
+                                    <div className="flex items-center gap-4">
+                                        <div className="h-px bg-neutral-800 flex-1" />
+                                        <span className="text-sm text-gray-500">OR</span>
+                                        <div className="h-px bg-neutral-800 flex-1" />
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-2">Upload Image</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={async (e) => {
+                                                if (e.target.files && e.target.files[0]) {
+                                                    const url = await uploadImage(e.target.files[0]);
+                                                    if (url) setNewWork({ ...newWork, image_url: url });
+                                                }
+                                            }}
+                                            className="w-full bg-neutral-800 p-2 rounded-lg border border-neutral-700 text-sm text-gray-300"
+                                        />
+                                        {uploading && <p className="text-sm text-yellow-500 mt-2">Uploading...</p>}
+                                    </div>
+                                </div>
+
+                                {newWork.image_url && (
+                                    <div className="relative w-full h-40 rounded-lg overflow-hidden border border-neutral-700">
+                                        <img src={newWork.image_url} alt="Preview" className="w-full h-full object-cover" />
+                                    </div>
+                                )}
+
+                                <button type="submit" disabled={uploading || !newWork.image_url} className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed">
                                     Add Work
                                 </button>
                             </form>
@@ -193,23 +246,52 @@ export default function AdminDashboard() {
                                     onChange={(e) => setNewPost({ ...newPost, type: e.target.value as "image" | "instagram" })}
                                     className="w-full bg-neutral-800 p-3 rounded-lg border border-neutral-700 focus:outline-none focus:border-white"
                                 >
-                                    <option value="image">Image Upload</option>
                                     <option value="instagram">Instagram Link</option>
+                                    <option value="image">Image Upload</option>
                                 </select>
-                                <input
-                                    placeholder={newPost.type === "image" ? "Image URL" : "Instagram Post URL"}
-                                    value={newPost.content_url}
-                                    onChange={(e) => setNewPost({ ...newPost, content_url: e.target.value })}
-                                    className="w-full bg-neutral-800 p-3 rounded-lg border border-neutral-700 focus:outline-none focus:border-white"
-                                    required
-                                />
+
+                                {newPost.type === "image" ? (
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-2">Upload Image</label>
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={async (e) => {
+                                                if (e.target.files && e.target.files[0]) {
+                                                    const url = await uploadImage(e.target.files[0]);
+                                                    if (url) setNewPost({ ...newPost, content_url: url });
+                                                }
+                                            }}
+                                            className="w-full bg-neutral-800 p-2 rounded-lg border border-neutral-700 text-sm text-gray-300"
+                                        />
+                                        {uploading && <p className="text-sm text-yellow-500 mt-2">Uploading...</p>}
+                                        {newPost.content_url && (
+                                            <div className="relative w-full h-40 rounded-lg overflow-hidden border border-neutral-700 mt-2">
+                                                <img src={newPost.content_url} alt="Preview" className="w-full h-full object-cover" />
+                                            </div>
+                                        )}
+                                    </div>
+                                ) : (
+                                    <input
+                                        placeholder="Instagram Post URL"
+                                        value={newPost.content_url}
+                                        onChange={(e) => setNewPost({ ...newPost, content_url: e.target.value })}
+                                        className="w-full bg-neutral-800 p-3 rounded-lg border border-neutral-700 focus:outline-none focus:border-white"
+                                        required
+                                    />
+                                )}
+
                                 <textarea
                                     placeholder="Caption (Optional)"
                                     value={newPost.caption}
                                     onChange={(e) => setNewPost({ ...newPost, caption: e.target.value })}
                                     className="w-full bg-neutral-800 p-3 rounded-lg border border-neutral-700 focus:outline-none focus:border-white h-24"
                                 />
-                                <button type="submit" className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200">
+                                <button
+                                    type="submit"
+                                    disabled={uploading || !newPost.content_url}
+                                    className="w-full bg-white text-black font-bold py-3 rounded-lg hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
                                     Post
                                 </button>
                             </form>

@@ -22,15 +22,13 @@ export default function Contact() {
                         something amazing together.
                     </p>
 
-                    <a
-                        href="mailto:dibyaranjandwibedy67@gmail.com"
-                        className="inline-flex items-center gap-2 text-2xl md:text-3xl font-medium hover:text-gray-400 transition-colors mb-16"
-                    >
-                        <Mail className="w-8 h-8" />
-                        dibyaranjandwibedy67@gmail.com
-                    </a>
-
                     <div className="flex justify-center gap-8 mb-16">
+                        <a
+                            href="mailto:dibyaranjandwibedy67@gmail.com"
+                            className="p-4 bg-neutral-900 rounded-full hover:bg-white hover:text-black transition-all duration-300"
+                        >
+                            <Mail className="w-6 h-6" />
+                        </a>
                         <Link
                             href="https://www.instagram.com/_drd_clicks_/"
                             target="_blank"
@@ -38,18 +36,18 @@ export default function Contact() {
                         >
                             <Instagram className="w-6 h-6" />
                         </Link>
-                        <Link
+                        {/* <Link
                             href="#"
                             className="p-4 bg-neutral-900 rounded-full hover:bg-white hover:text-black transition-all duration-300"
                         >
                             <Twitter className="w-6 h-6" />
-                        </Link>
-                        <Link
+                        </Link> */}
+                        {/* <Link
                             href="#"
                             className="p-4 bg-neutral-900 rounded-full hover:bg-white hover:text-black transition-all duration-300"
                         >
                             <Linkedin className="w-6 h-6" />
-                        </Link>
+                        </Link> */}
                         <Link
                             href="https://wa.me/919337568290"
                             target="_blank"

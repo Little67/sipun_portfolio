@@ -27,11 +27,11 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-black/80 backdrop-blur-md py-4" : "bg-transparent py-6"
+            className={`absolute top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${scrolled ? "bg-black/90 backdrop-blur-md py-4 fixed" : "bg-transparent py-4 md:py-6"
                 }`}
         >
             <div className="container mx-auto px-6 flex justify-between items-center">
-                <Link href="/" className="text-2xl font-bold tracking-tighter">
+                <Link href="/" className="text-xl md:text-2xl font-bold tracking-tighter">
                     DRD CLICKS<span className="text-gray-400">.</span>
                 </Link>
 
@@ -59,7 +59,7 @@ export default function Navbar() {
                     className="md:hidden text-white focus:outline-none"
                     onClick={() => setIsOpen(!isOpen)}
                 >
-                    {isOpen ? <X size={28} /> : <Menu size={28} />}
+                    {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </button>
             </div>
 

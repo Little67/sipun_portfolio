@@ -36,7 +36,7 @@ export default function Navbar() {
                 </Link>
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex space-x-8">
+                <div className="hidden md:flex md:space-x-4 lg:space-x-8">
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}

@@ -43,14 +43,14 @@ export default function BookingPage() {
         <div className="bg-black min-h-screen text-white">
             <Navbar />
 
-            <div className="pt-32 pb-20 px-6 container mx-auto">
+            <div className="pt-24 md:pt-32 pb-20 px-6 container mx-auto">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="max-w-2xl mx-auto"
                 >
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">Book a Session</h1>
+                        <h1 className="text-3xl md:text-5xl font-bold mb-4 tracking-tight">Book a Session</h1>
                         <p className="text-gray-400">Tell me about your vision, and let's make it happen.</p>
                     </div>
 

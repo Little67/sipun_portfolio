@@ -14,7 +14,7 @@ export default function Contact() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
                 >
-                    <h2 className="text-4xl md:text-6xl font-bold mb-8 tracking-tighter">
+                    <h2 className="text-3xl md:text-6xl font-bold mb-8 tracking-tighter">
                         Let's Work Together
                     </h2>
                     <p className="text-gray-400 text-lg mb-12 max-w-2xl mx-auto">

@@ -39,13 +39,13 @@ export default function SocialPage() {
         <main className="bg-black min-h-screen text-white">
             <Navbar />
 
-            <div className="container mx-auto px-6 py-32">
+            <div className="container mx-auto px-6 py-24 md:py-32">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="text-center mb-16"
                 >
-                    <h1 className="text-4xl md:text-6xl font-bold mb-4 tracking-tighter">
+                    <h1 className="text-3xl md:text-6xl font-bold mb-4 tracking-tighter">
                         Journal & Social
                     </h1>
                     <p className="text-gray-400 max-w-2xl mx-auto">
